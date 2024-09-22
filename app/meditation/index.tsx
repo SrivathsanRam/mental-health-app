@@ -1,5 +1,15 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  useState,
+  useRef,
+} from 'react';
+import {
+  ScrollView,
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,6 +17,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 export default function Meditation() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isTrackInitialPlay, setTrackInitialPlay] = useState(true);
   const [sliderValue, setSliderValue] = useState(0);
   const [durationMillis, setDurationMillis] = useState(0);
   const [positionMillis, setPositionMillis] = useState(0);
@@ -21,6 +32,7 @@ export default function Meditation() {
     newSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
     await newSound.playAsync();
     setIsPlaying(true);
+    setTrackInitialPlay(false);
   };
 
   const onPlaybackStatusUpdate = (status: any) => {
@@ -72,49 +84,126 @@ export default function Meditation() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handlePlayPause} style={styles.playPauseButton}>
-        <MaterialIcons
-          name={isPlaying ? 'pause' : 'play-arrow'}
-          size={48}
-          color="#ffffff"
+      <View>
+        <Text style={styles.titleSubtle}>Take a</Text>
+        <Text style={styles.titleEmphasis}>Mindful Pause</Text>
+        <Text style={styles.titleSubtle}>
+          Life is a
+         <Text style={styles.boldText}> marathon</Text>
+        </Text>
+        <Text style={styles.titleSubtle}>
+          Not a
+          <Text style={styles.boldText}> sprint</Text>
+        </Text>
+      </View>
+      <View style={styles.controlContainer}>
+        <TouchableOpacity onPress={handlePlayPause} style={styles.playPauseButton}>
+          <MaterialIcons
+            name={isPlaying ? 'pause' : 'play-arrow'}
+            size={96}
+            color="#ffffff"
+          />
+        </TouchableOpacity>
+        <Text>{getTimeMins(positionMillis)}/{getTimeMins(durationMillis)}</Text>
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={1}
+          value={sliderValue}
+          onValueChange={handleSliderChange}
+          minimumTrackTintColor="#1EB1FC"
+          maximumTrackTintColor="#000000"
+          thumbTintColor="#1EB1FC"
         />
-      </TouchableOpacity>
-      <Text>{getTimeMins(positionMillis)}/{getTimeMins(durationMillis)}</Text>
-      <Slider
-        style={styles.slider}
-        minimumValue={0}
-        maximumValue={1}
-        value={sliderValue}
-        onValueChange={handleSliderChange}
-        minimumTrackTintColor="#1EB1FC"
-        maximumTrackTintColor="#000000"
-        thumbTintColor="#1EB1FC"
-      />
-      <Button title="Stop" onPress={handleStop} />
+        <Text style={styles.titleSubtle}>{Math.floor(durationMillis/60000)} mins</Text>
+      {/* <Button title="Stop" onPress={handleStop} /> */}
+      </View>
+      <View style={styles.audioChoiceContainer}>
+        <Text style={{...styles.pill, ...styles.pillActive}}>General</Text>
+        <Text style={styles.pill}>IPPT</Text>
+      </View>
+      <View style={styles.subtextContainer}>
+        <Text style={styles.subtext}>Reduce Stress</Text>
+        <Text style={styles.subtext}>Enhance Well-being</Text>
+        <Text style={styles.subtext}>Increase Productivity</Text>
+      </View>
+      <View>
+        <Text style={{...styles.pill, ...styles.pillActive}}>Read more</Text>
+      </View>
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop:50,
-    alignItems: 'center',
+    paddingTop: 50,
     padding: 16,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#595F59',
   },
   playPauseButton: {
-    backgroundColor: '#1EB1FC',
-    borderRadius: 50,
-    padding: 16,
+    height: 150,
+    width: 150,
     marginBottom: 20,
+    borderColor: '#A5A5A5',
+    borderRadius: 5000,
+    borderWidth: 10,
+    padding: 16,
+    flexShrink: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 18,
     marginBottom: 10,
   },
+  controlContainer: {
+    alignItems: 'center',
+  },
   slider: {
     width: '100%',
     marginVertical: 20,
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  titleEmphasis: {
+    color: '#FFF',
+    fontSize: 24,
+    lineHeight: 48,
+    textAlign: 'center',
+  },
+  titleSubtle: {
+    color: '#A5A5A5',
+    fontSize: 16,
+    lineHeight: 20,
+    textAlign: 'center',
+  },
+  subtextContainer: {
+    paddingVertical: 20,
+  },
+  subtext: {
+    color: '#A5A5A5',
+    fontSize: 16,
+    lineHeight: 20,
+    paddingVertical: 4,
+  },
+  audioChoiceContainer: {
+    paddingVertical: 20,
+    flexDirection: 'row',
+    gap: 6,
+  },
+  pill: {
+    borderColor: '#A5A5A5',
+    borderRadius: 52,
+    borderWidth: 2,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+  },
+  pillActive: {
+    backgroundColor: '#A5A5A5',
+    color: '#FFF',
   },
 });

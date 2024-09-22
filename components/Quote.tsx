@@ -33,9 +33,9 @@ const Quote = () => {
 const styles = StyleSheet.create({
   quoteContainer: {
     flexDirection: 'row',
-    backgroundColor: '#32452d',
+    backgroundColor: '#2A4E4C',
     padding: 15,
-    borderRadius: 15,
+    borderRadius: 6,
     alignItems: 'center',
     marginVertical: 10,
   },

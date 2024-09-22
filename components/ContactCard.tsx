@@ -6,38 +6,44 @@ type ContactCardProps = {
   organisation: string;
   phoneNumber: string;
   details: string;
+  mode: 'flat' | 'raised';
 };
 
-function ContactCard({ organisation, phoneNumber, details }:ContactCardProps) {
+function ContactCard({
+  organisation,
+  phoneNumber,
+  details,
+  mode
+}: ContactCardProps) {
   const handlePress = () => {
     Linking.openURL(`tel:${phoneNumber}`);
   };
 
   return (
-    <TouchableOpacity style={styles.card} onPress={handlePress}>
+    <TouchableOpacity style={mode === 'flat' ? styles.cardFlat : styles.cardRaised} onPress={handlePress}>
       <View style={styles.cardContent}>
         <View>
           <Text style={styles.orgText}>{organisation}</Text>
           <Text style={styles.detailsText}>{phoneNumber} • {details}</Text>
         </View>
-        <Ionicons name="call" size={24} color="blue" />
+        <Ionicons name="call" size={24} color="black" />
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
+  cardFlat: {
     width: '100%',
-    padding: 20,
-    borderRadius: 10,
-    backgroundColor: '#f9f9f9',
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    padding: 10,
+  },
+  cardRaised: {
+    width: '100%',
+    marginBottom: 20,
+    borderRadius: 10,
+    padding: 20,
+    backgroundColor: '#F6F6F6',
   },
   cardContent: {
     flexDirection: 'row',

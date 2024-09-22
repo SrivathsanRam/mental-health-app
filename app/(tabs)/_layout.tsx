@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Image } from "react-native";
+import { Image } from 'expo-image';
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -24,7 +24,7 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color, focused }) => (
             <Image
               style={{ width: size, height: size }}
-              source={require("../../assets/tab_icons/Home_Button.png")}
+              source={require("../../assets/tab_icons/home.svg")}
             />
           ),
         }}
@@ -36,7 +36,7 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color, focused }) => (
             <Image
               style={{ width: size, height: size }}
-              source={require("../../assets/tab_icons/SOS_Button.png")}
+              source={require("../../assets/tab_icons/sos.svg")}
             />
           ),
         }}
@@ -48,7 +48,7 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color, focused }) => (
             <Image
               style={{ width: size, height: size }}
-              source={require("../../assets/tab_icons/Feedback_Button.png")}
+              source={require("../../assets/tab_icons/feedback.svg")}
             />
           ),
         }}

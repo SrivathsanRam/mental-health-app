@@ -1,4 +1,10 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // For Telegram icon
 
 type TelegramCardProps = {
@@ -38,11 +44,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '100%',
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
   },
   image: {
     width: 130,

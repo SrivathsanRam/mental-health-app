@@ -1,15 +1,22 @@
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 
 export default function Activities() {
   const handlePress = () =>{
     router.push("/meditation");
   }
+  
   return (
     <TouchableOpacity onPress={handlePress} style={styles.card}>
       {/* Image on the left */}
-      <Image source={require('../assets/activities/Stressed_Out_Graphic.png')} style={styles.image} />
+      <Image source={require('../assets/activities/meditation.svg')} style={styles.image} />
       <View style={styles.content}>
         {/* Title */}
         <Text style={styles.title}>Overwhelmed and unable to focus?</Text>
@@ -25,8 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     padding: 15,
-    backgroundColor:"#FFDDF9",
-    borderRadius: 10,
+    backgroundColor:"#FFE7E7",
+    borderRadius: 6,
     width: '100%',
     marginBottom: 20,
   },

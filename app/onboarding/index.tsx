@@ -6,13 +6,14 @@ import { router } from 'expo-router';
 import Goals from '@/components/Goals';
 
 const goalTitles = ['Break Bad Habits', 'Learn More', 'Keep Calm', 'Form Good Habits', 'Manage Stress', 'Journalling'];
+const goalImage = require('../../assets/placeholders/400x400.svg');
 const goalImages = [
-  require('../../assets/goals/goal1.png'),
-  require('../../assets/goals/goal2.png'),
-  require('../../assets/goals/goal3.png'),
-  require('../../assets/goals/goal4.png'),
-  require('../../assets/goals/goal5.png'),
-  require('../../assets/goals/goal6.png'),
+  goalImage,
+  goalImage,
+  goalImage,
+  goalImage,
+  goalImage,
+  goalImage,
 ];
 
 export default function Onboarding() {

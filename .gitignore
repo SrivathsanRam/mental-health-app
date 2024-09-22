@@ -1,4 +1,8 @@
 node_modules/
+.lsp/
+*~
+\#*#
+.\#*
 .expo/
 dist/
 npm-debug.*
@@ -9,7 +13,10 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-assets/
+android/
+ios/
+assets/*
+!assets/**/*.svg
 # macOS
 .DS_Store
 

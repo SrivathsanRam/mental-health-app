@@ -1,32 +1,52 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { Mulish_400Regular } from '@expo-google-fonts/mulish';
+import {
+  DefaultTheme,
+  Theme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-
 import { useColorScheme } from '@/hooks/useColorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+// Custom light theme
+const CustomTheme: Theme = DefaultTheme;
+CustomTheme.colors.background = '#FFF';
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Mulish_400Regular,
   });
 
   useEffect(() => {
     const checkUserData = async () => {
       try {
-        const alias = await AsyncStorage.getItem('alias');
-        const dob = await AsyncStorage.getItem('dob');
-        const goals = await AsyncStorage.getItem('goals');
+        const [
+          alias,
+          dob,
+          goals,
+          authToken
+        ] = await Promise.allSettled([
+          AsyncStorage.getItem('alias'),
+          AsyncStorage.getItem('dob'),
+          AsyncStorage.getItem('goals'),
+          AsyncStorage.getItem('authToken'), // Switch this to proper SecureStore.
+        ]).then(x => x.map(v => v.status === 'fulfilled' ? v.value : undefined));
 
-        if (!alias || !dob || !goals) {
-          router.replace('/onboarding')
+        console.log(alias, dob, goals, authToken);
+
+        if (!authToken) {
+          router.replace('/login');
+        } else if (!alias || !dob || !goals) {
+          router.replace('/onboarding');
         } else {
           setIsReady(true); // Data exists, app can proceed
         }
@@ -46,9 +66,9 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{headerShown:false}}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false,  }} />
+    <ThemeProvider value={CustomTheme}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>
