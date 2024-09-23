@@ -33,6 +33,9 @@ export default function Index() {
     <ScrollView style={styles.container}>
       <Text style={styles.greeter}>Hey, {name}!</Text>
       <DiaryHero/>
+      <Section title="Quote of the Day">
+        <Quote/>
+      </Section>
       <Section title="Activities">
         <Activities/>
       </Section>
@@ -52,6 +55,7 @@ function DiaryHero() {
     setMood(selectedMood);
     const currentDate = new Date().toISOString().split('T')[0]; // date formatted as YYYY-MM-DD
     await AsyncStorage.setItem('mood', JSON.stringify({ date: currentDate, mood: selectedMood }));
+    
   };
   
   const styles = StyleSheet.create({
